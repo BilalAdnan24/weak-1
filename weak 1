@@ -1,0 +1,94 @@
+class Book:
+    def __init__(self, title, price):
+        self.title = title
+        self.price = price
+
+    def __str__(self):
+        return f"{self.title}: ${self.price:.2f}"
+
+
+class BookManager:
+    def __init__(self):
+        self.books = []
+
+    def add_book(self, title, price):
+        book = Book(title, price)
+        self.books.append(book)
+        print(f"Book '{title}' added successfully!")
+
+    def remove_book(self, title):
+        for book in self.books:
+            if book.title == title:
+                self.books.remove(book)
+                print(f"Book '{title}' removed successfully!")
+                return
+        print(f"Book '{title}' not found!")
+
+    def change_book(self, old_title, new_title, new_price):
+        for book in self.books:
+            if book.title == old_title:
+                book.title = new_title
+                book.price = new_price
+                print(f"Book '{old_title}' updated to '{new_title}' with price ${new_price:.2f} successfully!")
+                return
+        print(f"Book '{old_title}' not found!")
+
+    def calculate_total_price(self):
+        total_price = sum(book.price for book in self.books)
+        return total_price
+
+    def display_books(self):
+        if not self.books:
+            print("No books available!")
+        else:
+            for book in self.books:
+                print(book)
+
+
+def main():
+    manager = BookManager()
+
+    while True:
+        print("\nBook Manager Options:")
+        print("1. Add a new book")
+        print("2. Remove a book")
+        print("3. Change book details")
+        print("4. Display all books")
+        print("5. Calculate total price of books")
+        print("6. Exit")
+
+        choice = input("Enter your choice (1-6): ")
+
+        if choice == '1':
+            title = input("Enter book title: ")
+            price = float(input("Enter book price: "))
+            manager.add_book(title, price)
+
+        elif choice == '2':
+            title = input("Enter book title to remove: ")
+            manager.remove_book(title)
+
+        elif choice == '3':
+            old_title = input("Enter current book title: ")
+            new_title = input("Enter new book title: ")
+            new_price = float(input("Enter new book price: "))
+            manager.change_book(old_title, new_title, new_price)
+
+        elif choice == '4':
+            print("\nList of books:")
+            manager.display_books()
+
+        elif choice == '5':
+            total_price = manager.calculate_total_price()
+            print(f"\nTotal price of all books: ${total_price:.2f}")
+
+        elif choice == '6':
+            print("Exiting the program...")
+            break
+
+        else:
+            print("Invalid choice! Please try again.")
+
+
+if __name__ == "__main__":
+    main()
